@@ -1,0 +1,62 @@
+%YAML:1.0 # need to specify the file type at the top!
+
+gps:
+  enabled: true
+  max_n: 2                # number of receivers (gps0..gps{max_n-1})
+  do_calib_ext: false     # estimate antenna lever arms online
+  do_calib_dt: false      # estimate GNSS-IMU time offsets online
+  # 50 m instead of 5 m: the Horn yaw from 5 m of travel was 4.9 deg off on loop_sanisidro
+  # split_01, which put every later fix outside the chi2 gate (34 m rms error, GNSS unused).
+  # With 50 m the heading error is 0.4 deg.
+  init_distance: 50.0     # path length to travel before aligning the world frame to ENU [m]
+  init_closed_form: false # false = yaw from Horn method, true = 4-DOF RANSAC solution
+  init_cov_dt: 5e-1       # initial variance of the time offset [s^2] (used if do_calib_dt)
+  init_cov_ex: 5e-2       # initial variance of the lever arm [m^2] (used if do_calib_ext)
+  init_cov_inflation: 1.0 # after the ENU alignment the WHOLE state covariance is multiplied by
+                          # this. <1 deflates it and makes the filter more confident in every
+                          # std (pos, ori, biases, calib); upstream configs use 2.0
+  # Never reject: the filter covariance is over-confident (vision/lidar drift outruns it), so
+  # any gate ends up rejecting the true fixes and the drift is never corrected. Measured on
+  # 5 min of loop_sanisidro split_01 (RTK fixes, 2-4 cm), rms error vs the RTK track:
+  #   gate x5: 74 m / z -27 m (0 fixes accepted), x50: 11.6 m / z -31 m (half accepted),
+  #   none:    2.8 m / z 0.8 m (all accepted).
+  # Revisit (or inflate the IMU noise so a gate becomes consistent) for non-RTK recordings.
+  # NOTE the multiplier is literal (thr = chi2_mult * chi2_95): 9999 still rejects a fix whose
+  # residual exceeds ~280 sigma, i.e. ~4 m with the 1.4 cm RTK covariance (overwrite_noise:
+  # false) -- a 5 m ENU-alignment error then locks every later fix out and the full
+  # loop_sanisidro run diverged that way. 1e9 (~1 km) really never rejects.
+  chi2_mult: 1e9       # multiplier of the 95% chi2 gate. Huge = never reject, which also disables
+                          # the built-in fallback (3D rejected -> retry with horizontal only)
+  overwrite_noise: false  # false = use the NavSatFix covariance; `noise`/`noise_z` below are only a
+                          # fallback for fixes with covariance <= 0. true = always use noise/noise_z
+  noise: 0.05             # horizontal std [m] (see overwrite_noise)
+  # The GNSS altitude is much worse than the horizontal fix: keep the vertical
+  # solution owned by LiDAR/camera by giving the Up axis a weak weight.
+  # Without noise_z the vertical std defaults to 2 * noise.
+  # NOTE: NOT in effect while overwrite_noise: false. Both u-blox fix topics carry a
+  # DIAGONAL_KNOWN covariance (100% of the fixes in sanisidro_0_restamp_stereo), so MINS uses
+  # the per-fix values. NavSatFix2Data (ROSHelper/ROS2Helper) used to take the variance as
+  # the std (vAcc 0.42 m became sigma_z = 0.18 m; on RTK fixes sigma 0.02 m became 0.0004 m
+  # and the filter diverged within a minute); it now takes the square root.
+  # With standalone fixes raise `noise` (0.05 m is far too tight; residuals are ~1-3 m).
+  noise_z: 0.5            # vertical std [m] (see overwrite_noise)
+
+# Antenna assignment measured from the data (sanisidro_0): the ENU vector between the
+# two fixes on straight segments is (-3.3, -0.3, -1.0) m in the body frame, so
+# /ublox_moving_base is the REAR antenna and /ublox_rover the FRONT one. With the
+# lever arms swapped the other way the filter converges to a ~160 deg yaw error
+# (GPS residuals ~10 m, camera features rendered beside the car instead of ahead).
+# Both fixes are standalone (NavSatFix status 0: no SBAS/RTK). Their altitudes disagree by
+# 2.3..7.2 m (rover lower, median 3.9 m) although the lever arms differ by ~0.2 m in height
+# and each receiver claims vAcc ~0.4 m: fused as unbiased, they pull Z between each other.
+# The moving base is the more repeatable one (same-place revisits: median 0.05 m, p95 1.75 m).
+gps0:
+  timeoffset: 0.0   # t_imu = t_gps + timeoffset [s]
+  pGinI: [-0.914167, -0.070031, -0.393146]   # antenna position in the IMU frame [m] (IMU +z points DOWN)
+  topic: "/ublox_moving_base/fix"
+
+gps1:
+  timeoffset: 0.0
+  pGinI: [2.692000, 0.035000, -0.425000]
+  topic: "/ublox_rover/fix"
+

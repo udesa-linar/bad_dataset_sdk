@@ -1,0 +1,62 @@
+camera: cam2
+frame: lidar
+window: window_00 (lidar_cam_calib, 242.1-242.9 s)
+note: 'picked in koide initial_guess_manual; camera_uv: raw (distorted) image pixel;
+  lidar_xyz: point of the accumulated cloud of the window [m]'
+correspondences:
+- camera_uv:
+  - 410.4
+  - 751.45
+  lidar_xyz:
+  - 1.0163
+  - 3.8529
+  - -0.9784
+- camera_uv:
+  - 451.25
+  - 694.45
+  lidar_xyz:
+  - 1.0811
+  - 3.6778
+  - -0.7884
+- camera_uv:
+  - 545.3
+  - 705.85
+  lidar_xyz:
+  - 1.2267
+  - 3.2654
+  - -0.7345
+- camera_uv:
+  - 162.45
+  - 701.1
+  lidar_xyz:
+  - 0.3661
+  - 4.9139
+  - -0.9704
+- camera_uv:
+  - 267.9
+  - 617.5
+  lidar_xyz:
+  - 0.7769
+  - 5.0349
+  - -0.7278
+- camera_uv:
+  - 623.2
+  - 460.75
+  lidar_xyz:
+  - 14.2777
+  - 30.5609
+  - -0.2487
+- camera_uv:
+  - 668.8
+  - 478.8
+  lidar_xyz:
+  - 16.7442
+  - 32.1536
+  - -0.7283
+- camera_uv:
+  - 1128.6
+  - 511.1
+  lidar_xyz:
+  - 25.006
+  - 22.3782
+  - -1.263

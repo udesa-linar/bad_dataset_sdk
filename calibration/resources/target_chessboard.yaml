@@ -1,0 +1,5 @@
+target_type: 'checkerboard'   # static checkerboard of lidar_cam_calib (4 x 5 squares, board upright); not used by the scripts
+targetCols: 3                 # inner corners along a row (horizontal)
+targetRows: 4                 # inner corners along a column (vertical)
+rowSpacingMeters: 0.20        # square side [m]
+colSpacingMeters: 0.20        # square side [m]

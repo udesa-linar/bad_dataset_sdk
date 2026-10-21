@@ -1,0 +1,5 @@
+target_type: 'aprilgrid'   # AprilGrid moved around the parked vehicle (cams_calib); tags 36h11 with a 2-bit border
+tagCols: 6
+tagRows: 6
+tagSize: 0.0825            # tag side [m]
+tagSpacing: 0.30303        # gap / tag side = 0.025 / 0.0825

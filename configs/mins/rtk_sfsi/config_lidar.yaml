@@ -1,0 +1,46 @@
+%YAML:1.0 # need to specify the file type at the top!
+
+# LiDAR update = point-to-plane residuals of the new scan against a LOCAL ikd-tree map.
+# The map is re-anchored to the newest clone and forgets old/far points (map_decay_*),
+# so LiDAR only constrains RELATIVE motion: it slows Z drift down but never removes it.
+# Absolute altitude can only come from GNSS.
+lidar:
+  enabled: true
+  max_n: 1                # number of lidars (lidar0..lidar{max_n-1})
+  do_calib_dt: false   # estimate the lidar-IMU time offset online
+  do_calib_ext: false   # estimate the lidar-IMU extrinsic online
+  init_cov_dt: 1e-1       # initial variance of the time offset [s^2]
+  init_cov_ex_o: 1e-3     # initial variance of the extrinsic rotation [rad^2]
+  init_cov_ex_p: 1e-3     # initial variance of the extrinsic translation [m^2]
+  max_range: 30.0         # points farther than this are dropped [m]
+  min_range: 1            # points closer than this are dropped (car body) [m]
+  chi2_mult: 1            # multiplier of the 95% chi2 gating threshold (bigger = accept more)
+  raw_do_downsample: true
+  raw_downsample_size: 2.0  # voxel size for the incoming scan [m] (fewer points = faster, less info)
+  raw_noise: 0.1          # std of the new scan point in the point-to-plane residual [m]
+  raw_remove_motion_blur: false # required to set v_angles and h_angles correctly
+                          # (deskew assumes a fixed ring x azimuth point order; not set for our VLP)
+  raw_point_dt: 1e-6      # time between consecutive points, only used for deskew [s]
+  map_do_downsample: true
+  map_downsample_size: 1  # voxel size of the map [m]
+  map_noise: 0.1          # std of the map neighbor points used to fit each plane [m]
+  map_ngbr_num: 5         # nearest map points used to fit the local plane of each scan point
+  map_ngbr_max_d: 10.0    # reject if the farthest neighbor is beyond this. SQUARED distance
+                          # (ikd-tree returns d^2): 10.0 => ~3.2 m
+  map_decay_time: 60 # sec  map points older than this are removed
+  map_decay_dist: 60 # m    map points farther than this from the newest clone are removed
+  map_use_icp: false      # no effect - ICP scan-to-map was removed from this fork (see LidarHelper)
+  map_icp_dist: 30 # m    no effect (ICP removed)
+  plane_max_p2pd: 0.1     # neighbors must lie within this of their fitted plane [m]; the new
+                          # point is rejected if farther than 3x this from the plane
+  plane_max_condi: 200.0  # max condition number of the plane fit (rejects degenerate/line fits)
+
+lidar0:
+  timeoffset: 0.0         # initial lidar time offset t_imu = t_lidar + timeoffset [s]
+  T_imu_lidar:            # R_LtoI and p_LinI (lidar pose in the IMU frame; IMU +z points DOWN)
+    - [ 0.99949494,  0.03094469, -0.00723146,  1.30988839]
+    - [ 0.03104971, -0.99940691,  0.01489117,  0.06104565]
+    - [-0.00676637, -0.01510818, -0.99986297, -1.00345287]
+    - [ 0.00000000,  0.00000000,  0.00000000,  1.00000000]
+  topic: "/velodyne_points"
+

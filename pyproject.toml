@@ -1,0 +1,28 @@
+[project]
+name = "badataset"
+version = "0.1.0"
+description = "Read, calibrate and evaluate on the Buenos Aires Dataset without ROS"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "Apache-2.0"}
+authors = [{name = "Agustín Roca"}, {name = "Gastón Castro"}, {name = "Claus Rosito"}, {name = "Gabriel Torre"},
+           {name = "Ignacio Mas"}, {name = "Juan I. Giribet"}]
+dependencies = ["numpy", "scipy", "mcap", "mcap-ros2-support", "opencv-python-headless", "pyyaml"]
+
+[project.urls]
+Repository = "https://github.com/udesa-linar/badataset_sdk"
+
+[project.optional-dependencies]
+plot = ["matplotlib"]
+calib = ["rosbags", "matplotlib"]
+test = ["pytest"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["badataset"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,15 @@
+%YAML:1.0 # need to specify the file type at the top!
+
+# Entry point: names of the per-module config files (relative to this folder).
+# To turn a sensor off set <sensor>.enabled: false in its file (the camera / gps /
+# lidar / wheel modules are also disabled if config_<sensor>.yaml does not exist here).
+config_system: "config_system.yaml"
+#config_simulation: "config_simulation.yaml"
+config_estimator: "config_estimator.yaml"
+config_camera: "config_camera.yaml"
+config_gps: "config_gps.yaml"
+config_imu: "config_imu.yaml"
+config_lidar: "config_lidar.yaml"
+#config_vicon: "config_vicon.yaml"
+config_wheel: "config_wheel.yaml"
+config_init: "config_init.yaml"
