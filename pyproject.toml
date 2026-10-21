@@ -12,9 +12,13 @@ dependencies = ["numpy", "scipy", "mcap", "mcap-ros2-support", "opencv-python-he
 [project.urls]
 Repository = "https://github.com/udesa-linar/badataset_sdk"
 
+[project.scripts]
+badataset-download = "badataset.download:main"
+
 [project.optional-dependencies]
 plot = ["matplotlib"]
 calib = ["rosbags", "matplotlib"]
+download = ["huggingface_hub>=0.23"]
 test = ["pytest"]
 
 [build-system]

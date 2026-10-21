@@ -6,7 +6,23 @@ reproduce its calibration from the released calibration recordings.
 ```bash
 pip install -e .                # reading, calibration utilities, evaluation
 pip install -e ".[calib]"       # + what the calibration scripts need (rosbags, matplotlib)
+pip install -e ".[download]"    # + the download helper (huggingface_hub)
 ```
+
+## Downloading
+
+The data are hosted on Hugging Face ([udesa-linar/buenos-aires-dataset](https://huggingface.co/datasets/udesa-linar/buenos-aires-dataset)).
+Download everything, or only the sequences, sensor groups and splits you need:
+
+```bash
+badataset-download /data/buenos_aires                                    # the whole release (2.9 TB)
+badataset-download /data/buenos_aires --sequences loop_caba --groups imu_gps ground_truth tf_static
+badataset-download /data/buenos_aires --sequences caba --splits split_03  # one split, every group
+badataset-download /data/buenos_aires --calib                            # only the calibration recordings
+```
+
+or `badataset.download.download(root, sequences=..., groups=..., splits=..., calib=...)` from Python. An interrupted
+download resumes; `--revision` pins a version of the release.
 
 The dataset layout is `<root>/<sequence>/split_XX/<group>/<group>_0.mcap`, one ROS 2 MCAP bag per sensor group
 (`cameras`, `lidar`, `imu_gps`, `dataspeed`, `wheel`, `microphone`, `ground_truth`, `tf_static`), and
@@ -88,7 +104,23 @@ with the released calibration. See [calibration/README.md](calibration/README.md
 ## Tests
 
 ```bash
-BADATASET_ROOT=/data/buenos_aires pytest     # uses caba/split_03; skipped if it is not there
+BADATASET_ROOT=/data/buenos_aires pytest     # the release tests use caba/split_03 and are skipped if it is not there
+```
+
+## Citation
+
+If you use the dataset or this toolkit, please cite:
+
+```bibtex
+@article{roca2026buenosaires,
+  title   = {The Buenos Aires Dataset: Multimodal Driving Data from a Latin American Metropolis
+             with GNSS-Referenced Time Synchronization},
+  author  = {Roca, Agust{\'i}n and Castro, Gast{\'o}n and Rosito, Claus and Torre, Gabriel and
+             Mas, Ignacio and Giribet, Juan I.},
+  journal = {The International Journal of Robotics Research},
+  note    = {submitted},
+  year    = {2026}
+}
 ```
 
 ## License
