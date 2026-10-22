@@ -112,13 +112,12 @@ BADATASET_ROOT=/data/buenos_aires pytest     # the release tests use caba/split_
 If you use the dataset or this toolkit, please cite:
 
 ```bibtex
-@article{roca2026buenosaires,
+@misc{roca2026buenosaires,
   title   = {The Buenos Aires Dataset: Multimodal Driving Data from a Latin American Metropolis
              with GNSS-Referenced Time Synchronization},
   author  = {Roca, Agust{\'i}n and Castro, Gast{\'o}n and Rosito, Claus and Torre, Gabriel and
              Mas, Ignacio and Giribet, Juan I.},
-  journal = {The International Journal of Robotics Research},
-  note    = {submitted},
+  howpublished = {\url{https://udesa-linar.github.io/buenos-aires-dataset/}},
   year    = {2026}
 }
 ```
