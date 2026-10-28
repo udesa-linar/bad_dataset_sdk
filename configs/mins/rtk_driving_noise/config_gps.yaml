@@ -25,11 +25,11 @@ gps:
   # residual exceeds ~280 sigma, i.e. ~4 m with the 1.4 cm RTK covariance (overwrite_noise:
   # false) -- a 5 m ENU-alignment error then locks every later fix out and the full
   # loop_sanisidro run diverged that way. 1e9 (~1 km) really never rejects.
-  chi2_mult: 1e9       # multiplier of the 95% chi2 gate. Huge = never reject, which also disables
+  chi2_mult: 9999       # multiplier of the 95% chi2 gate. Huge = never reject, which also disables
                           # the built-in fallback (3D rejected -> retry with horizontal only)
   overwrite_noise: true  # false = use the NavSatFix covariance; `noise`/`noise_z` below are only a
                           # fallback for fixes with covariance <= 0. true = always use noise/noise_z
-  noise: 0.05             # horizontal std [m] (see overwrite_noise)
+  noise: 0.5             # horizontal std [m] (see overwrite_noise)
   # The GNSS altitude is much worse than the horizontal fix: keep the vertical
   # solution owned by LiDAR/camera by giving the Up axis a weak weight.
   # Without noise_z the vertical std defaults to 2 * noise.
@@ -39,7 +39,7 @@ gps:
   # the std (vAcc 0.42 m became sigma_z = 0.18 m; on RTK fixes sigma 0.02 m became 0.0004 m
   # and the filter diverged within a minute); it now takes the square root.
   # With standalone fixes raise `noise` (0.05 m is far too tight; residuals are ~1-3 m).
-  noise_z: 0.1            # vertical std [m] (see overwrite_noise)
+  noise_z: 5.0            # vertical std [m] (see overwrite_noise)
 
 # Antenna assignment measured from the data (sanisidro_0): the ENU vector between the
 # two fixes on straight segments is (-3.3, -0.3, -1.0) m in the body frame, so

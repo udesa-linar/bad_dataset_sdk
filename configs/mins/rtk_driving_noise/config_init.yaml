@@ -10,7 +10,7 @@ init:
   window_time: 2.0
   imu_thresh: 0.3         # was 1.5 (EuroC handheld-MAV "jerk" value); 5x above rest, 3x below motion
   imu_wheel_thresh: 0.1   # smoothness thr. for the IMU-wheel initializer (matches kaist)
-  imu_only_init: false    # false => use the IMU+wheel initializer, which supports DYNAMIC
+  imu_only_init: true    # false => use the IMU+wheel initializer, which supports DYNAMIC
                           #          (already-moving) init. Requires wheel.enabled: true.
                           # With wheel.enabled: false (current) it falls back to IMU-only.
   # MUST stay false for this rig. 'true' hard-codes gravity_in_I0 = (0,0,+gravity_mag),

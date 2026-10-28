@@ -5,8 +5,8 @@
 # make the filter over-trust IMU propagation (incl. the unstable vertical channel) and
 # react slowly to aiding measurements. Inflating them 2-10x is common practice on vehicles.
 imu:
-  accel_noise: 9.583563e-04   # [ m / s^2 / sqrt(Hz) ]   ( accel "white noise" )
+  accel_noise: 9.583563e-02   # [ m / s^2 / sqrt(Hz) ]   ( accel "white noise" )
   accel_bias: 4.800223e-06   # [ m / s^3 / sqrt(Hz) ].  ( accel bias diffusion )
-  gyro_noise: 4.368534e-04   # [ rad / s / sqrt(Hz) ]   ( gyro "white noise" )
+  gyro_noise: 1.310560e-03   # [ rad / s / sqrt(Hz) ]   ( gyro "white noise" )
   gyro_bias: 1.244886e-06   # [ rad / s^2 / sqrt(Hz) ] ( gyro bias diffusion )
   topic: "/imu/data"
