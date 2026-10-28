@@ -24,6 +24,9 @@ badataset-download /data/buenos_aires --calib                            # only 
 or `badataset.download.download(root, sequences=..., groups=..., splits=..., calib=...)` from Python. An interrupted
 download resumes; `--revision` pins a version of the release.
 
+The dataset will be published on Hugging Face upon publication of the paper; until then `badataset-download` stops
+with a notice saying so.
+
 The dataset layout is `<root>/<sequence>/split_XX/<group>/<group>_0.mcap`, one ROS 2 MCAP bag per sensor group
 (`cameras`, `lidar`, `imu_gps`, `dataspeed`, `wheel`, `microphone`, `ground_truth`, `tf_static`), and
 `<root>/calib/` for the calibration recordings. Only the groups you downloaded are needed.
@@ -116,7 +119,7 @@ If you use the dataset or this toolkit, please cite:
   title   = {The Buenos Aires Dataset: Multimodal Driving Data from a Latin American Metropolis
              with GNSS-Referenced Time Synchronization},
   author  = {Roca, Agust{\'i}n and Castro, Gast{\'o}n and Rosito, Claus and Torre, Gabriel and
-             Mas, Ignacio and Giribet, Juan I.},
+             Mas, Ignacio and Bunge, Roberto and Giribet, Juan I.},
   howpublished = {\url{https://udesa-linar.github.io/buenos-aires-dataset/}},
   year    = {2026}
 }

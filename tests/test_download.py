@@ -7,12 +7,21 @@ import pytest
 from badataset import download as D
 
 
+class RepositoryNotFoundError(Exception):
+    pass
+
+
+def fake_hub(monkeypatch, snapshot):
+    hub, errors = types.ModuleType('huggingface_hub'), types.ModuleType('huggingface_hub.errors')
+    hub.snapshot_download, errors.RepositoryNotFoundError = snapshot, RepositoryNotFoundError
+    monkeypatch.setitem(sys.modules, 'huggingface_hub', hub)
+    monkeypatch.setitem(sys.modules, 'huggingface_hub.errors', errors)
+
+
 @pytest.fixture
 def calls(monkeypatch):
     seen = []
-    hub = types.ModuleType('huggingface_hub')
-    hub.snapshot_download = lambda **kw: seen.append(kw) or kw['local_dir']
-    monkeypatch.setitem(sys.modules, 'huggingface_hub', hub)
+    fake_hub(monkeypatch, lambda **kw: seen.append(kw) or kw['local_dir'])
     return seen
 
 
@@ -43,3 +52,13 @@ def test_cli_calib_only(calls):
     D.main(['/data', '--sequences', 'caba', '--calib', '--revision', 'v1.0'])
     assert 'calib/*' in calls[-1]['allow_patterns'] and calls[-1]['revision'] == 'v1.0'
     assert len(calls[-1]['allow_patterns']) == len(D.GROUPS) + 2
+
+
+def test_not_published(monkeypatch):
+    def missing(**kw):
+        raise RepositoryNotFoundError
+    fake_hub(monkeypatch, missing)
+    with pytest.raises(SystemExit, match='not available for download yet'):
+        D.download('/data', ['caba'])
+    with pytest.raises(SystemExit, match='Hugging Face'):
+        D.main(['/data', '--calib'])

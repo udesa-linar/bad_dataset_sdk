@@ -10,6 +10,9 @@ or from the shell:
 
 The files keep the release layout (<root>/<sequence>/split_XX/<group>/...), which is what Dataset(root) reads.
 A download that is interrupted resumes where it stopped. Needs huggingface_hub: pip install -e ".[download]".
+
+The dataset will be published on Hugging Face upon publication of the paper; until then download() stops with a
+notice saying so.
 """
 import argparse
 
@@ -38,12 +41,20 @@ def download(root, sequences=None, groups=None, splits=None, calib=False, repo_i
     revision: a tag or commit of the dataset repository, to pin a version of the release."""
     try:
         from huggingface_hub import snapshot_download
+        try:
+            from huggingface_hub.errors import RepositoryNotFoundError
+        except ImportError:                                     # huggingface_hub < 0.24
+            from huggingface_hub.utils import RepositoryNotFoundError
     except ImportError:
         raise SystemExit('download needs huggingface_hub: pip install -e ".[download]"') from None
     allow = ['calib/*'] if calib and sequences == [] else patterns(sequences, groups, splits, calib)
     allow += ['README.md']
-    return snapshot_download(repo_id=repo_id, repo_type='dataset', revision=revision, local_dir=root,
-                             allow_patterns=allow)
+    try:
+        return snapshot_download(repo_id=repo_id, repo_type='dataset', revision=revision, local_dir=root,
+                                 allow_patterns=allow)
+    except RepositoryNotFoundError:
+        raise SystemExit(f'The Buenos Aires Dataset is not available for download yet. It will be published on Hugging '
+                         f'Face (https://huggingface.co/datasets/{repo_id}) upon publication of the paper.') from None
 
 
 def main(argv=None):
