@@ -10,7 +10,7 @@ authors = [{name = "Agustín Roca"}, {name = "Gastón Castro"}, {name = "Claus R
 dependencies = ["numpy", "scipy", "mcap", "mcap-ros2-support", "opencv-python-headless", "pyyaml"]
 
 [project.urls]
-Repository = "https://github.com/udesa-linar/badataset_sdk"
+Repository = "https://github.com/udesa-linar/bad_dataset_sdk"
 
 [project.scripts]
 badataset-download = "badataset.download:main"
