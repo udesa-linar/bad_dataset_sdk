@@ -1,4 +1,4 @@
-"""Reading the Buenos Aires Dataset without ROS.
+"""Reading the Buenos Aires Driving (BAD) Dataset without ROS.
 
 Layout:  <root>/<sequence>/split_XX/<group>/<group>_0.mcap   (group: cameras, lidar, imu_gps, dataspeed,
 wheel, microphone, ground_truth, tf_static). MCAP embeds the message definitions, so every topic

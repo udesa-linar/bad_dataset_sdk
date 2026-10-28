@@ -1,7 +1,7 @@
 [project]
 name = "badataset"
 version = "0.1.0"
-description = "Read, calibrate and evaluate on the Buenos Aires Dataset without ROS"
+description = "Read, calibrate and evaluate on the Buenos Aires Driving (BAD) Dataset without ROS"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "Apache-2.0"}

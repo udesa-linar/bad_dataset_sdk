@@ -1,4 +1,4 @@
-"""Download the Buenos Aires Dataset, or only the parts you need, from Hugging Face.
+"""Download the Buenos Aires Driving (BAD) Dataset, or only the parts you need, from Hugging Face.
 
     from badataset.download import download
     download('/data/buenos_aires', sequences=['loop_caba'], groups=['imu_gps', 'ground_truth', 'tf_static'])
@@ -18,7 +18,7 @@ import argparse
 
 from .reader import SEQUENCES
 
-REPO_ID = 'udesa-linar/buenos-aires-dataset'
+REPO_ID = 'udesa-linar/bad-dataset'
 GROUPS = ['cameras', 'lidar', 'imu_gps', 'dataspeed', 'wheel', 'microphone', 'ground_truth', 'tf_static']
 
 
@@ -53,7 +53,7 @@ def download(root, sequences=None, groups=None, splits=None, calib=False, repo_i
         return snapshot_download(repo_id=repo_id, repo_type='dataset', revision=revision, local_dir=root,
                                  allow_patterns=allow)
     except RepositoryNotFoundError:
-        raise SystemExit(f'The Buenos Aires Dataset is not available for download yet. It will be published on Hugging '
+        raise SystemExit(f'The BAD Dataset is not available for download yet. It will be published on Hugging '
                          f'Face (https://huggingface.co/datasets/{repo_id}) upon publication of the paper.') from None
 
 

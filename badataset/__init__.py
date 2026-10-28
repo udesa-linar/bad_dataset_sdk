@@ -1,4 +1,4 @@
-"""Tools for the Buenos Aires Dataset.
+"""Tools for the Buenos Aires Driving (BAD) Dataset.
 
 reader       Dataset / Sequence / Split: messages, images, LiDAR clouds, without ROS
 calib        /tf_static tree, camera intrinsics, LiDAR-to-camera projection

@@ -1,6 +1,6 @@
-# badataset: tools for the Buenos Aires Dataset
+# badataset: tools for the Buenos Aires Driving (BAD) Dataset
 
-Read the Buenos Aires Dataset without ROS, use its calibration, evaluate trajectories against its reference, and
+Read the BAD Dataset without ROS, use its calibration, evaluate trajectories against its reference, and
 reproduce its calibration from the released calibration recordings.
 
 ```bash
@@ -11,7 +11,7 @@ pip install -e ".[download]"    # + the download helper (huggingface_hub)
 
 ## Downloading
 
-The data are hosted on Hugging Face ([udesa-linar/buenos-aires-dataset](https://huggingface.co/datasets/udesa-linar/buenos-aires-dataset)).
+The data are hosted on Hugging Face ([udesa-linar/bad-dataset](https://huggingface.co/datasets/udesa-linar/bad-dataset)).
 Download everything, or only the sequences, sensor groups and splits you need:
 
 ```bash
@@ -116,16 +116,16 @@ If you use the dataset or this toolkit, please cite:
 
 ```bibtex
 @misc{roca2026buenosaires,
-  title   = {The Buenos Aires Dataset: Multimodal Driving Data from a Latin American Metropolis
+  title   = {The Buenos Aires Driving Dataset: Multimodal Driving Data from a Latin American Metropolis
              with GNSS-Referenced Time Synchronization},
   author  = {Roca, Agust{\'i}n and Castro, Gast{\'o}n and Rosito, Claus and Torre, Gabriel and
              Mas, Ignacio and Bunge, Roberto and Giribet, Juan I.},
-  howpublished = {\url{https://udesa-linar.github.io/buenos-aires-dataset/}},
+  howpublished = {\url{https://udesa-linar.github.io/bad-dataset/}},
   year    = {2026}
 }
 ```
 
 ## License
 
-The code is released under the [Apache License 2.0](LICENSE). The Buenos Aires Dataset itself is released under
+The code is released under the [Apache License 2.0](LICENSE). The BAD Dataset itself is released under
 CC BY-NC-SA 4.0 (see the dataset card).
