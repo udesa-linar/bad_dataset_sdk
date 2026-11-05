@@ -28,7 +28,8 @@ The dataset will be published on Hugging Face upon publication of the paper; unt
 with a notice saying so.
 
 The dataset layout is `<root>/<sequence>/split_XX/<group>/<group>_0.mcap`, one ROS 2 MCAP bag per sensor group
-(`cameras`, `lidar`, `imu_gps`, `dataspeed`, `wheel`, `microphone`, `ground_truth`, `tf_static`), and
+(`cameras`, `lidar`, `imu_gps`, `dataspeed`, `wheel`, `microphone`, `tf_static`, and `ground_truth` in the splits with
+reference trajectory data), and
 `<root>/calib/` for the calibration recordings. Only the groups you downloaded are needed.
 
 ## Reading

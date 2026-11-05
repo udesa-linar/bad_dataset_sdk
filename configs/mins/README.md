@@ -42,5 +42,5 @@ ros2 run mins bag configs/mins/rtk_driving_noise/config.yaml --ros-args -p sys_p
 
 Where the engine idles, the IMU vibration exceeds the static-initialization threshold, so MINS can initialize later
 than the start, in a short stop or while moving; the MINS trajectories begin 186, 201, 304 and 65 s after the
-start of `sanfer_sanisidro`, `loop_sanisidro`, `caba` and `loop_caba`. The `ground_truth` bags of the release have no
-`split_00` in the March sequences (the vehicle is parked or leaving its parking spot).
+start of `sanfer_sanisidro`, `loop_sanisidro`, `caba` and `loop_caba`. In the March sequences, `split_00` ends before
+initialization and alignment are complete, so the release has no `ground_truth` bag for it.
