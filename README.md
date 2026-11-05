@@ -116,7 +116,7 @@ If you use the dataset or this toolkit, please cite:
 
 ```bibtex
 @misc{roca2026buenosaires,
-  title   = {Buenos Aires Driving Dataset: Multimodal Sensor Data from Latin American Urban Traffic},
+  title   = {Buenos Aires Driving Dataset: Multimodal Driving Data of Latin American Urban Scenarios for Autonomous Driving},
   author  = {Roca, Agust{\'i}n and Castro, Gast{\'o}n and Rosito, Claus and Torre, Gabriel and
              Mas, Ignacio and Bunge, Roberto and Giribet, Juan I.},
   howpublished = {\url{https://udesa-linar.github.io/bad-dataset/}},

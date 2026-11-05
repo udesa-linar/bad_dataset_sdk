@@ -12,7 +12,8 @@ configuration, `rtk_driving_noise/`, is used for the four sequences:
 | Initialization | static, IMU only (`imu_thresh` 0.3); ENU alignment after 50 m of travel |
 
 The extrinsics in these files are those of the released `/tf_static` and the camera intrinsics those of
-`camera_info`.
+`camera_info`. No time offset is applied: the input stamps are on the GNSS-referenced time base of the release. The
+Dataspeed wheel speeds, however, carry host-reception stamps and therefore keep the latency of the vehicle interface.
 
 ## MINS version
 
