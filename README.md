@@ -11,8 +11,8 @@ pip install -e ".[download]"    # + the download helper (huggingface_hub)
 
 ## Downloading
 
-The data are hosted on Hugging Face ([udesa-linar/bad-dataset](https://huggingface.co/datasets/udesa-linar/bad-dataset)).
-Download everything, or only the sequences, sensor groups and splits you need:
+The data will be hosted on Hugging Face ([udesa-linar/bad-dataset](https://huggingface.co/datasets/udesa-linar/bad-dataset))
+upon publication of the paper. Download everything, or only the sequences, sensor groups and splits you need:
 
 ```bash
 badataset-download /data/buenos_aires                                    # the whole release (2.9 TB)
@@ -24,8 +24,7 @@ badataset-download /data/buenos_aires --calib                            # only 
 or `badataset.download.download(root, sequences=..., groups=..., splits=..., calib=...)` from Python. An interrupted
 download resumes; `--revision` pins a version of the release.
 
-The dataset will be published on Hugging Face upon publication of the paper; until then `badataset-download` stops
-with a notice saying so.
+Until the dataset is published, `badataset-download` stops with a notice saying so.
 
 The dataset layout is `<root>/<sequence>/split_XX/<group>/<group>_0.mcap`, one ROS 2 MCAP bag per sensor group
 (`cameras`, `lidar`, `imu_gps`, `dataspeed`, `wheel`, `microphone`, `tf_static`, and `ground_truth` in the splits with
@@ -96,9 +95,10 @@ E.ate_se3(ref.traj, est)                         # absolute error after SE(3) al
 E.gnss_errors(seq, est, ref.origin)              # error against the RTK receiver's fixes, by fixed / float / none
 ```
 
-The reference is accurate to a few centimeters at RTK-fixed epochs but only to about a meter where the GNSS solution
-is RTK-float; use the RTK-fixed epochs for centimeter-level comparisons (see the paper). Applied to the reference
-itself, `gnss_errors` reproduces the table of the paper (SI loops: 0.043 m median on 924 fixed epochs).
+Because the absolute error of the reference is not independently bounded, small absolute trajectory errors should be
+interpreted with caution. For centimeter-level comparisons, withheld RTK-fixed positions may be useful when their
+accuracy is independently supported (see the paper). Applied to the reference itself, `gnss_errors` gives the
+paper's consistency check against the fixes of the RTK receiver.
 
 ## Reproducing the calibration
 
@@ -127,5 +127,5 @@ If you use the dataset or this toolkit, please cite:
 
 ## License
 
-The code is released under the [Apache License 2.0](LICENSE). The BAD Dataset itself is released under
+The code is released under the [Apache License 2.0](LICENSE). The BAD Dataset itself will be released under
 CC BY-NC-SA 4.0 (see the dataset card).

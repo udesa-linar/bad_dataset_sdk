@@ -3,7 +3,8 @@
 Each split with a reference has ``ground_truth/`` with ``/ground_truth/pose``
 (``geometry_msgs/PoseWithCovarianceStamped``): the pose of the ``imu`` frame in a local East-North-Up frame
 ``enu`` at every estimator update (~14 Hz), with its covariance. The WGS-84 origin of ``enu`` is in the bag
-metadata (``metadata.yaml``, ``custom_data``). Splits where the vehicle is parked have no reference.
+metadata (``metadata.yaml``, ``custom_data``). Splits that end before the estimator has initialized and aligned
+with the GNSS (the first split of the March sequences) have no reference.
 
     from badataset import Dataset
     from badataset.groundtruth import Reference

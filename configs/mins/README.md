@@ -7,7 +7,7 @@ configuration, `rtk_driving_noise/`, is used for the four sequences:
 
 | Setting | Value |
 |---|---|
-| IMU white noise | Allan-variance model of `calibration/` times 100 (accelerometer) and 3 (gyroscope), the level measured while driving; bias random walks as in the Allan model |
+| IMU white noise | Allan-variance model of `calibration/` times 100 (accelerometer) and 3 (gyroscope), to account for vehicle vibration; bias random walks as in the Allan model |
 | GNSS weighting | fixed 0.5 m horizontal, 5 m vertical for both receivers (not the covariance they report); chi2 gate multiplier 9999 |
 | Initialization | static, IMU only (`imu_thresh` 0.3); ENU alignment after 50 m of travel |
 
